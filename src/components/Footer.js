@@ -9,7 +9,7 @@ var style = {
     position: "fixed",
     left: "0",
     bottom: "0",
-    height: "20px",
+    height: "25px",
     width: "100%",
 };
 
