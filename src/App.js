@@ -22,6 +22,8 @@ function App() {
     new Task(3,"Food Shopping", "Dec 14th at 2:30pm", false)
   ]});
 
+  let [showAddTask, setShowAddTask] = useState(false);
+
   let deleteTask = (id)=>{
     setTasks(items => items.filter((task) => task.id !== id));
   };
@@ -30,15 +32,18 @@ function App() {
       item.id == id ? {...item, reminder: !item.reminder} : item
     ))
   };
-  let addTask=()=>{
-    console.log("asd");
-  };
-  //let name = "Quang";
+  let onadd =()=>{
+    setShowAddTask(prev => !prev);
+  }
+  let addTask = (newTask)=>{
+    const id = Math.floor(Math.random() * 10000) + 1;
+    let add = new Task(id, newTask.text, newTask.datetime, newTask.reminder);
+    setTasks(prev => [...prev, add]);
+  }
   return (
     <div className="container">
-      <Header />
-      {/* <h2>Hello {name} from React</h2> */}
-      <AddTask onAdd = {addTask}/>
+      <Header onclick = {onadd} show = {showAddTask}/>
+      {showAddTask && <AddTask onAdd = {addTask} />}
       {tasks.length > 0 ? <Tasks tasks = {tasks} onDelete = {deleteTask}  onToggleReminder = {toggleReminder}/> : "No Task"}
       
       <Footer name = "Quang"/>
