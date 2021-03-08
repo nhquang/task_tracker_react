@@ -2,7 +2,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 class Task {
   constructor(id, text, day, reminder){
@@ -16,18 +16,38 @@ class Task {
 
 function App() {
 
-  let [tasks, setTasks] = useState(() =>{ return [
-    new Task(1,"Doctors Appointment", "Dec 5th at 2:30pm", true),
-    new Task(2,"Meeting at School", "Dec 12th at 1:30pm", true),
-    new Task(3,"Food Shopping", "Dec 14th at 2:30pm", false)
-  ]});
+  let [tasks, setTasks] = useState([]);
 
   let [showAddTask, setShowAddTask] = useState(false);
 
-  let deleteTask = (id)=>{
-    setTasks(items => items.filter((task) => task.id !== id));
+  useEffect(async()=>{
+    //let getTasks = async()=>{
+      setTasks(await fetchTasks());
+    //};
+    //getTasks();
+  }, []);
+
+  let fetchTasks = async() =>{
+    let res = await fetch("http://localhost:5000/tasks");
+    let data = await res.json();
+    return data;
   };
-  let toggleReminder = (id) =>{
+  let fetchATaskById = async(id) =>{
+    let res = await fetch(`http://localhost:5000/tasks/${id}`);
+    let data = await res.json();
+    return data;
+  };
+
+  let deleteTask = async (id)=>{
+    
+    await fetch(`http://localhost:5000/tasks/${id}`, {method: "DELETE"})
+    setTasks(items => items.filter((task) => task.id !== id));
+
+
+  };
+  let toggleReminder = async (id) =>{
+    let task = await fetchATaskById(id);
+    await fetch(`http://localhost:5000/tasks/${id}`, {method:"PUT", headers:{"Content-type": "application/json"}, body : JSON.stringify({...task, reminder: !task.reminder})})
     setTasks(items => items.map((item) => 
       item.id == id ? {...item, reminder: !item.reminder} : item
     ))
@@ -35,10 +55,14 @@ function App() {
   let onadd =()=>{
     setShowAddTask(prev => !prev);
   }
-  let addTask = (newTask)=>{
-    const id = Math.floor(Math.random() * 10000) + 1;
+  let addTask = async (newTask)=>{
+    /*const id = Math.floor(Math.random() * 10000) + 1;
     let add = new Task(id, newTask.text, newTask.datetime, newTask.reminder);
-    setTasks(prev => [...prev, add]);
+    setTasks(prev => [...prev, add]);*/
+
+    let res = await fetch("http://localhost:5000/tasks", {method: "POST", headers:{"Content-type" : "application/json"}, body: JSON.stringify(newTask)});
+    let data = await res.json();
+    setTasks(prev => [...prev, data]);
   }
   return (
     <div className="container">
