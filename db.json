@@ -1,22 +1,28 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "text": "Doctors Appointment",
-      "day": "Feb 5th at 2:30pm",
-      "reminder": true
-    },
-    {
-      "id": 2,
-      "text": "Meeting at School",
-      "day": "Feb 6th at 1:30pm",
-      "reminder": true
-    },
-    {
-      "text": "Meeting the professor",
-      "day": "Mar 1st at 9:00am",
+      "text": "Dentist Appointment",
+      "day": "3/10/2021 at 11:10:00 PM",
       "reminder": false,
+      "id": 1
+    },
+    {
+      "text": "Group Meeting",
+      "day": "3/11/2021 at 4:00:00 PM",
+      "reminder": true,
+      "id": 2
+    },
+    {
+      "text": "Do Homework",
+      "day": "3/11/2021 at 10:00:00 PM",
+      "reminder": true,
       "id": 3
+    },
+    {
+      "text": "Pick up grandma",
+      "day": "3/8/2021 at 9:00:00 PM",
+      "reminder": false,
+      "id": 4
     }
   ]
 }

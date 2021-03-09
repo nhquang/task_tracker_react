@@ -14,6 +14,7 @@ function AddTask(props) {
         if(!text || !day)
             alert("Please add a task!!!");
         else{
+            
             props.onAdd({text, day, reminder});
 
             setText("");
@@ -30,7 +31,7 @@ function AddTask(props) {
             </div>
             <div className = "form-control">
                 <label>Date and Time</label>
-                <input type="text" placeholder="Task date and time" value={day} onChange={(e) => setDatetime(e.target.value)}/>
+                <input type="datetime-local" placeholder="Task date and time" value={day} onChange={(e) => setDatetime(e.target.value)}/>
             </div>
             <div className = "form-control form-control-check">
                 <label>Set Reminder</label>

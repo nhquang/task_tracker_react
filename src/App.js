@@ -18,17 +18,15 @@ class Task {
 
 function App() {
 
-  //let location = useLocation();
-
   let [tasks, setTasks] = useState([]);
 
   let [showAddTask, setShowAddTask] = useState(false);
 
   useEffect(async()=>{
-    //let getTasks = async()=>{
+    let getTasks = async()=>{
       setTasks(await fetchTasks());
-    //};
-    //getTasks();
+    };
+    getTasks();
   }, []);
 
   let fetchTasks = async() =>{
@@ -43,9 +41,12 @@ function App() {
   };
 
   let deleteTask = async (id)=>{
+
+    let res = await fetch(`http://localhost:5000/tasks/${id}`, {method: "DELETE"});
     
-    await fetch(`http://localhost:5000/tasks/${id}`, {method: "DELETE"})
-    setTasks(items => items.filter((task) => task.id !== id));
+    res.status === 200
+      ? setTasks(tasks.filter((task) => task.id !== id))
+      : alert('Error Deleting This Task');
 
 
   };
@@ -63,6 +64,8 @@ function App() {
     /*const id = Math.floor(Math.random() * 10000) + 1;
     let add = new Task(id, newTask.text, newTask.datetime, newTask.reminder);
     setTasks(prev => [...prev, add]);*/
+    let format = new Date(newTask.day);
+    newTask.day = format.toLocaleDateString() + " at " + format.toLocaleTimeString();
 
     let res = await fetch("http://localhost:5000/tasks", {method: "POST", headers:{"Content-type" : "application/json"}, body: JSON.stringify(newTask)});
     let data = await res.json();
