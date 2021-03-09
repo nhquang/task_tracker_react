@@ -1,4 +1,6 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 var style = {
@@ -13,11 +15,14 @@ var style = {
     width: "100%",
 };
 
-const Footer = ({name}) =>{
+const Footer = () =>{
+    let location = useLocation();
     return(
-        <div style ={style}>
-            {name}
-        </div>
+        
+        <footer>
+            {location.pathname === "/" && <p>Copyright &copy; 2021</p>}
+            {location.pathname === "/" && <Link to="/about">About</Link>}
+        </footer>
     );
 }
 

@@ -13,16 +13,10 @@
       "reminder": true
     },
     {
-      "text": "asdasd",
-      "day": "Feb 7th at 1:30pm",
+      "text": "Meeting the professor",
+      "day": "Mar 1st at 9:00am",
       "reminder": false,
       "id": 3
-    },
-    {
-      "text": "asdasda",
-      "day": "Feb 8th at 1:30pm",
-      "reminder": false,
-      "id": 4
     }
   ]
 }
